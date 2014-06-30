@@ -78,7 +78,7 @@ func TestIterate(t *testing.T) {
 	}
 }
 
-func TestUnion(t *testing.T) {
+func TestCombine(t *testing.T) {
 	s1 := NewSet()
 	s2 := NewSet()
 
@@ -88,8 +88,17 @@ func TestUnion(t *testing.T) {
 	s2.Add("baz")
 	s2.Add("boo")
 
-	s3 := s1.Union(s2)
+	s3 := s1.Combine(s2)
 	if s3.Length() != 4 {
 		t.Fail()
 	}
+}
+
+func TestArray(t *testing.T) {
+	s := NewSet()
+	s.Add("foo")
+	s.Add("bar")
+
+	arr := s.Array()
+	fmt.Printf("%v", arr)
 }

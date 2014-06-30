@@ -24,8 +24,8 @@ func (s *Set) Add(value interface{}) {
 
 // Check if the set contains a value.
 func (s *Set) Contains(value interface{}) bool {
-	_, ok := (*s).values[value]
-	return ok
+	_, exists := (*s).values[value]
+	return exists
 }
 
 // Returns the current number of items in the set.
@@ -45,8 +45,8 @@ func (s *Set) Iterate() <-chan interface{} {
 	return ch
 }
 
-// Get a new set representing the union of s and o.
-func (s *Set) Union(o *Set) *Set {
+// Combines two sets into a new.
+func (s *Set) Combine(o *Set) *Set {
 	n := NewSet()
 
 	// TODO: Avoid iteration by copy?
@@ -61,4 +61,15 @@ func (s *Set) Union(o *Set) *Set {
 	}
 
 	return n
+}
+
+func (s *Set) Array() []string {
+	// TODO: Check if we can pass cardinality to capacity
+	result := make([]string, 0)
+	for v := range s.Iterate() {
+		if str, ok := v.(string); ok {
+			result = append(result, str)
+		}
+	}
+	return result
 }
